@@ -1,5 +1,6 @@
-package com.awsmovie.entity
+package com.awsmovie.entity.user
 
+import com.awsmovie.entity.BaseEntity
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -18,7 +19,7 @@ data class User protected constructor(
         private const val TAG = "User"
 
         //============ 생성 메서드 ============//
-        fun createUser(userId: String, userPw: String, userName: String):User = User(userId, userPw, userName)
+        fun createUser(userId: String, userPw: String, userName: String): User = User(userId, userPw, userName)
 
     }
 

@@ -1,5 +1,6 @@
-package com.awsmovie.entity
+package com.awsmovie.entity.genre
 
+import com.awsmovie.entity.BaseEntity
 import org.hibernate.Hibernate
 import javax.persistence.*
 

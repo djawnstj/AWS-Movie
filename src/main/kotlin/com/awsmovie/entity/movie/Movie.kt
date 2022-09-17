@@ -1,5 +1,7 @@
-package com.awsmovie.entity
+package com.awsmovie.entity.movie
 
+import com.awsmovie.entity.BaseEntity
+import com.awsmovie.entity.genre.Genre
 import org.hibernate.Hibernate
 import java.time.LocalDateTime
 import javax.persistence.Column

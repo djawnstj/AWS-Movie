@@ -1,5 +1,7 @@
-package com.awsmovie.entity
+package com.awsmovie.entity.movie
 
+import com.awsmovie.entity.BaseEntity
+import com.awsmovie.entity.user.User
 import org.hibernate.Hibernate
 import javax.persistence.*
 import javax.persistence.FetchType.LAZY

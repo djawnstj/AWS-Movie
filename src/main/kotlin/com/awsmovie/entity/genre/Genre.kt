@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 data class Genre protected constructor(
-    val genre: String
+    val genre: Int
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

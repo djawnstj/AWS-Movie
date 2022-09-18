@@ -4,6 +4,12 @@ import com.awsmovie.entity.BaseEntity
 import org.hibernate.Hibernate
 import javax.persistence.*
 
+/**
+ * Genre Code
+ *
+ *
+ *
+ */
 @Entity
 data class Genre protected constructor(
     val genre: Int
@@ -12,6 +18,13 @@ data class Genre protected constructor(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "genre_id")
     val genreId: Long? = null
+
+    companion object {
+
+        //============= 생성 메서드 =============//
+        fun createGenre(genreCode: Int) = Genre(genreCode)
+
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

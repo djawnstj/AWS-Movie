@@ -18,7 +18,7 @@ data class Movie protected constructor(
     @OneToOne(mappedBy = "movieImageId", fetch = LAZY)
     val movieImage: MovieImage,
     @OneToMany(mappedBy = "movieRateId", fetch = LAZY)
-가    val rates: List<MovieRate> = ArrayList(),
+    val rates: List<MovieRate> = ArrayList(),
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

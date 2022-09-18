@@ -18,12 +18,28 @@ data class Movie protected constructor(
     @OneToOne(mappedBy = "movieImageId", fetch = LAZY)
     val movieImage: MovieImage,
     @OneToMany(mappedBy = "movieRateId", fetch = LAZY)
-    val rates: List<MovieRate>,
+가    val rates: List<MovieRate> = ArrayList(),
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
     val movieId: Long? = null
+
+    //============= 연관관계 메서드 =============//
+    private fun setMovieImage(movieImage: MovieImage) {
+        movieImage.setMovieItem(this)
+    }
+
+    companion object {
+
+        //============= 생성 메서드 =============//
+        fun createMovie(movieName: String, runTime: Int, openingDate: LocalDateTime, summary: String, genres: List<Genre>, movieImage: MovieImage): Movie {
+            val movie = Movie(movieName, runTime, openingDate, summary, genres, movieImage)
+            movie.setMovieImage(movieImage)
+            return movie
+        }
+
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -7,14 +7,27 @@ import javax.persistence.FetchType.LAZY as LAZY
 
 @Entity
 data class MovieImage protected constructor(
-    var imagePath: String,
-    @OneToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
-    var movie: Movie,
+    val imagePath: String,
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_image_id")
     val movieImageId: Long? = null
+
+    @OneToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
+    lateinit var movie: Movie
+        protected set
+
+    fun setMovieItem(movie: Movie) {
+        this.movie = movie
+    }
+
+    companion object {
+
+        //============= 생성 메서드 =============//
+        fun createMovieImage(imagePath: String): MovieImage = MovieImage(imagePath)
+
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

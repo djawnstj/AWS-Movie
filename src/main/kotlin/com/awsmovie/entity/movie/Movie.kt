@@ -4,13 +4,8 @@ import com.awsmovie.entity.BaseEntity
 import com.awsmovie.entity.genre.Genre
 import org.hibernate.Hibernate
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.OneToMany
+import javax.persistence.*
+import javax.persistence.FetchType.LAZY as LAZY
 
 @Entity
 data class Movie protected constructor(
@@ -18,6 +13,10 @@ data class Movie protected constructor(
     val runTime: Int,
     val openingDate: LocalDateTime,
     val summary: String,
+    @OneToOne(mappedBy = "movieImageId", fetch = LAZY)
+    val movieImage: MovieImage,
+    @OneToMany(mappedBy = "movieRateId", fetch = LAZY)
+    val rates: List<MovieRate>,
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

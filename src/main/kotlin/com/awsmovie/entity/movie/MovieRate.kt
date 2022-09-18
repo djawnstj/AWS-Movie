@@ -17,6 +17,7 @@ data class MovieRate protected constructor(
 ) : BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_rate_id")
     val movieRateId: Long? = null
 
     override fun equals(other: Any?): Boolean {

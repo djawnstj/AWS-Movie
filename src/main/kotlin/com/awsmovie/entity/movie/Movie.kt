@@ -13,6 +13,8 @@ data class Movie protected constructor(
     val runTime: Int,
     val openingDate: LocalDateTime,
     val summary: String,
+    @OneToMany @JoinColumn(name = "genre_id")
+    val genres: List<Genre> = ArrayList(),
     @OneToOne(mappedBy = "movieImageId", fetch = LAZY)
     val movieImage: MovieImage,
     @OneToMany(mappedBy = "movieRateId", fetch = LAZY)
@@ -22,10 +24,6 @@ data class Movie protected constructor(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
     val movieId: Long? = null
-
-    @OneToMany
-    @JoinColumn(name = "genre_id")
-    val genres: List<Genre> = ArrayList<Genre>()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

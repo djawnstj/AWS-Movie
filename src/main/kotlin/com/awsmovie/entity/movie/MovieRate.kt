@@ -10,7 +10,7 @@ import javax.persistence.FetchType.LAZY
 data class MovieRate protected constructor(
     @OneToOne(fetch = LAZY) @JoinColumn(name = "uid")
     val user: User,
-    @OneToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
+    @ManyToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
     val movie: Movie,
     val rate: Int,
     val comment: String,

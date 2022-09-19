@@ -1,6 +1,7 @@
 package com.awsmovie.entity.genre
 
 import com.awsmovie.entity.BaseEntity
+import com.awsmovie.entity.movie.Movie
 import org.hibernate.Hibernate
 import javax.persistence.*
 
@@ -12,7 +13,9 @@ import javax.persistence.*
  */
 @Entity
 data class Genre protected constructor(
-    val genre: Int
+    val genre: Int,
+    @ManyToMany @JoinColumn(name = "movie_id")
+    val movies: List<Movie> = ArrayList()
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

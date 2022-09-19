@@ -13,11 +13,11 @@ data class Movie protected constructor(
     val runTime: Int,
     val openingDate: LocalDateTime,
     val summary: String,
-    @OneToMany @JoinColumn(name = "genre_id")
+    @ManyToMany(mappedBy = "movies")
     val genres: List<Genre> = ArrayList(),
-    @OneToOne(mappedBy = "movieImageId", fetch = LAZY)
+    @OneToOne(mappedBy = "movie", fetch = LAZY, cascade = [CascadeType.REMOVE])
     val movieImage: MovieImage,
-    @OneToMany(mappedBy = "movieRateId", fetch = LAZY)
+    @OneToMany(mappedBy = "movie", fetch = LAZY, cascade = [CascadeType.REMOVE])
     val rates: List<MovieRate> = ArrayList(),
 ): BaseEntity() {
 

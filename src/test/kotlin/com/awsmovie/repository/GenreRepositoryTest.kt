@@ -1,6 +1,7 @@
 package com.awsmovie.repository
 
 import com.awsmovie.entity.genre.Genre
+import com.awsmovie.entity.genre.GenreEnum
 import com.awsmovie.repository.genre.GenreRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
@@ -20,7 +21,7 @@ class GenreRepositoryTest @Autowired constructor(
     @Test
     fun 장르_저장() {
         // given
-        val genre = Genre.createGenre(0)
+        val genre = Genre.createGenre(GenreEnum.ROMANCE)
 
         // when
         val savedGenre = genreRepository.save(genre)

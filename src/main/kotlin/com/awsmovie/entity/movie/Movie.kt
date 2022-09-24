@@ -15,7 +15,7 @@ data class Movie protected constructor(
     val summary: String,
     @ManyToMany(mappedBy = "movies")
     val genres: List<Genre> = ArrayList(),
-    @OneToOne(mappedBy = "movie", fetch = LAZY, cascade = [CascadeType.REMOVE])
+    @OneToOne(mappedBy = "movie", fetch = LAZY, cascade = [CascadeType.REMOVE, CascadeType.ALL])
     val movieImage: MovieImage,
     @OneToMany(mappedBy = "movie", fetch = LAZY, cascade = [CascadeType.REMOVE])
     val rates: List<MovieRate> = ArrayList(),

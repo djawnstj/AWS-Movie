@@ -9,11 +9,11 @@ import javax.transaction.Transactional
 @Transactional
 open class GenreRepositoryImpl(
     private val em: EntityManager
-): GenreRepository {
+) {
 
-    override fun save(genre: Genre): Long {
-        em.persist(genre)
-        return genre.genreId ?: -1
-    }
+//    override fun save(genre: Genre): Long {
+//        em.persist(genre)
+//        return genre.genreId ?: -1
+//    }
 
 }

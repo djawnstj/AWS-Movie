@@ -2,14 +2,16 @@ package com.awsmovie.repository.movie
 
 import com.awsmovie.entity.movie.Movie
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 import java.util.*
 
-interface MovieRepository {
+@Repository
+interface MovieRepository: JpaRepository<Movie, Long> {
 
     /**
      * 영화 정보 저장
      */
-    fun save(movie: Movie): Long
+    fun save(movie: Movie): Movie
 
     /**
      * 영화 이름으로 검색
@@ -19,16 +21,16 @@ interface MovieRepository {
     /**
      * 개봉일 기준 최신순으로 영화 목록 조회
      */
-    fun findAllByOpeningDateDesc(): List<Movie>
+    fun findAllByOrderByOpeningDateDesc(): List<Movie>
 
     /**
      * 영화 id로 검색
      */
-    fun findById(movieId: Long): Movie
+    override fun findById(movieId: Long): Optional<Movie>
 
     /**
      * 전체 영화목록 조회
      */
-    fun findAll(): List<Movie>
+    override fun findAll(): List<Movie>
 
 }

@@ -15,13 +15,13 @@ class SpringConfig(
     val em: EntityManager
 ) {
 
-    @Bean
-    fun userRepository(): UserRepository = UserRepositoryImpl(em)
-
-    @Bean
-    fun genreRepository(): GenreRepository = GenreRepositoryImpl(em)
-
-    @Bean
-    fun movieRepository(): MovieRepository = MovieRepositoryImpl(em)
+//    @Bean
+//    fun userRepository(): UserRepository = UserRepositoryImpl(em)
+//
+//    @Bean
+//    fun genreRepository(): GenreRepository = GenreRepositoryImpl(em)
+//
+//    @Bean
+//    fun movieRepository(): MovieRepository = MovieRepositoryImpl(em)
 
 }

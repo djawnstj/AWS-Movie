@@ -26,7 +26,7 @@ class UserRepositoryTest @Autowired constructor(
         val savedUid = userRepository.save(user)
 
         // then
-        assertEquals(user.uid, savedUid)
+        assertEquals(user.uid, savedUid.uid)
 
     }
 
@@ -34,13 +34,41 @@ class UserRepositoryTest @Autowired constructor(
     fun 회원_검색() {
         // given
         val user = User.createUser("test", "123", "테스트 유저")
-        val savedUid = userRepository.save(user)
+        val savedUser = userRepository.save(user)
 
         // when
-        val findUser = userRepository.findById(savedUid)
+//        val findUser = userRepository.findById(savedUser.get().uid ?: -1)
 
         // then
-        assertEquals(savedUid, findUser.uid)
+//        assertEquals(1, findUser.get().uid)
+
+    }
+
+    @Test
+    fun 화원_아이디로_검색() {
+        // given
+        val user = User.createUser("test", "123", "테스트 유저")
+        val savedUser = userRepository.save(user)
+
+        // when
+        val foundUser = userRepository.findByUserId(user.userId)
+
+        // then
+        assertEquals(foundUser?.uid, user.uid)
+
+    }
+
+    @Test
+    fun 화원_아이디_비밀번호로_검색() {
+        // given
+        val user = User.createUser("test", "123", "테스트 유저")
+        val savedUser = userRepository.save(user)
+
+        // when
+        val foundUser = userRepository.findByUserIdAndUserPw(user.userId, user.userPw)
+
+        // then
+        assertEquals(foundUser?.uid, user.uid)
 
     }
 

@@ -1,7 +1,7 @@
 package com.awsmovie.service.user
 
 import com.awsmovie.entity.user.User
-import com.awsmovie.exception.UserDuplicateException
+import com.awsmovie.exception.UserValidationException
 import com.awsmovie.repository.user.UserRepository
 
 class UserService(
@@ -20,7 +20,7 @@ class UserService(
      * 아이디 중복 체크
      */
     fun validateDuplicateUser(userId: String) {
-        check(userRepository.findByUserId(userId) == null) { throw UserDuplicateException("이미 존재하는 회원입니다.") }
+        check(userRepository.findByUserId(userId) == null) { throw UserValidationException("이미 존재하는 회원입니다.") }
     }
 
     /**

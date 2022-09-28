@@ -16,6 +16,18 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         dialect.storage_engine: innodb
 
+  # Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: root
+
+  # Session
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
+
 logging:
   level:
     org.hibernate.SQL: debug

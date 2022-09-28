@@ -53,6 +53,10 @@ dependencies {
     }
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // 레디스
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:2.4.2")
+    implementation("org.springframework.session:spring-session-data-redis:2.4.2")
 }
 
 tasks.withType<KotlinCompile> {

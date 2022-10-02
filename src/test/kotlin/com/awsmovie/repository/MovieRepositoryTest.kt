@@ -33,7 +33,7 @@ class MovieRepositoryTest @Autowired constructor(
         val savedMovie = movieRepository.save(createMovie)
 
         // then
-        assertEquals(createMovie.movieId, savedMovie.get().movieId)
+        assertEquals(createMovie.movieId, savedMovie.movieId)
 
     }
 

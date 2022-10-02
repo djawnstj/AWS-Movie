@@ -7,34 +7,7 @@ server:
 # 실행할 환경 지정 spring:profiles:active 옵션
 spring:
   profiles:
-    active: dev
-
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace # sql 쿼리 로그에 파라미터를 남김
-
-# --- 로 설정을 구분하고 spring:config:active:on-profile 옵셥에 사용될 환경(local, dev, prod)를 명시
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  datasource:
-#    url: jdbc:h2:tcp://localhost/~/projects/spring/AWS-Movie/db/aws_movie # 윈도우
-    url: jdbc:h2:tcp://localhost/~/Documents/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 맥
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        dialect.storage_engine: innodb
+    active: prod
 
   # Redis
   redis:
@@ -48,8 +21,53 @@ spring:
     redis:
       flush-mode: on_save
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace # sql 쿼리 로그에 파라미터를 남김
+
+# --- 로 설정을 구분하고 spring:config:active:on-profile 옵셥에 사용될 환경(local, dev, prod)를 명시
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+#    url: jdbc:h2:tcp://localhost/~/projects/spring/AWS-Movie/db/aws_movie # 윈도우
+    url: jdbc:h2:tcp://localhost/~/Documents/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 맥
+#    url: jdbc:h2:~/Documents/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 맥
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect.storage_engine: innodb
+
+
 ---
 spring:
   config:
     activate:
       on-profile: prod
+
+  datasource:
+    url: jdbc:mariadb://aws-movie-api.cwtpsgbsj8sv.ap-northeast-2.rds.amazonaws.com:3306/AWS-Movie
+    username: root
+    password: ojs159357
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect.storage_engine: innodb

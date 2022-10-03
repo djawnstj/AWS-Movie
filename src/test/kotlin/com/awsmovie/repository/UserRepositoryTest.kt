@@ -34,7 +34,7 @@ class UserRepositoryTest @Autowired constructor(
     fun 회원_검색() {
         // given
         val user = User.createUser("test", "123", "테스트 유저")
-        val savedUser = userRepository.save(user)
+        userRepository.save(user)
 
         // when
 //        val findUser = userRepository.findById(savedUser.get().uid ?: -1)
@@ -48,7 +48,7 @@ class UserRepositoryTest @Autowired constructor(
     fun 화원_아이디로_검색() {
         // given
         val user = User.createUser("test", "123", "테스트 유저")
-        val savedUser = userRepository.save(user)
+        userRepository.save(user)
 
         // when
         val foundUser = userRepository.findByUserId(user.userId)
@@ -62,7 +62,7 @@ class UserRepositoryTest @Autowired constructor(
     fun 화원_아이디_비밀번호로_검색() {
         // given
         val user = User.createUser("test", "123", "테스트 유저")
-        val savedUser = userRepository.save(user)
+        userRepository.save(user)
 
         // when
         val foundUser = userRepository.findByUserIdAndUserPw(user.userId, user.userPw)

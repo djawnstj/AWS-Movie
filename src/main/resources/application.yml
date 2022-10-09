@@ -7,7 +7,7 @@ server:
 # 실행할 환경 지정 spring:profiles:active 옵션
 spring:
   profiles:
-    active: prod
+    active: dev
 
   # Redis
   redis:
@@ -20,6 +20,28 @@ spring:
     store-type: redis
     redis:
       flush-mode: on_save
+
+  # 파일 업로드 설정
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+# aws 설정
+# 사용할 S3 bucket region 입력
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAX6GBURBLI7E6TFVM       # AWS IAM AccessKey 적기
+      secretKey: lgrvEvxYdZT43y8UoE+XxdpxhTuvpu5tpm23G1IR   # AWS IAM SecretKey 적기
+    s3:
+      bucket: awsmoviebucket    # ex) marryting-gyunny
+      dir: djawnstj # ex) /gyunny
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
 logging:
   level:

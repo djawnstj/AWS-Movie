@@ -1,4 +1,4 @@
-package com.awsmovie.entity.genre
+package com.awsmovie.entity.movie.genre
 
 enum class GenreCode(
     val genreCode: Int,

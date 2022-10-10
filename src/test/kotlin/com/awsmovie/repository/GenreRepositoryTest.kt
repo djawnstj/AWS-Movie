@@ -1,7 +1,7 @@
 package com.awsmovie.repository
 
-import com.awsmovie.entity.genre.Genre
-import com.awsmovie.entity.genre.GenreCode
+import com.awsmovie.entity.movie.genre.Genre
+import com.awsmovie.entity.movie.genre.GenreCode
 import com.awsmovie.repository.genre.GenreRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*

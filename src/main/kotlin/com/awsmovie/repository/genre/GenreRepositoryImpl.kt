@@ -1,6 +1,6 @@
 package com.awsmovie.repository.genre
 
-import com.awsmovie.entity.genre.Genre
+import com.awsmovie.entity.movie.genre.Genre
 import lombok.RequiredArgsConstructor
 import javax.persistence.EntityManager
 import javax.transaction.Transactional

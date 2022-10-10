@@ -1,4 +1,4 @@
-package com.awsmovie.entity.genre
+package com.awsmovie.entity.movie.genre
 
 import com.awsmovie.entity.BaseEntity
 import com.awsmovie.entity.movie.Movie

@@ -1,7 +1,7 @@
 package com.awsmovie.repository.genre
 
-import com.awsmovie.entity.genre.Genre
-import com.awsmovie.entity.genre.GenreCode
+import com.awsmovie.entity.movie.genre.Genre
+import com.awsmovie.entity.movie.genre.GenreCode
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository

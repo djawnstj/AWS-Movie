@@ -46,7 +46,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1")
+
     //JUnit 추가
     testImplementation("org.junit.vintage:junit-vintage-engine") {
         exclude(group = "org.hamcrest", module = "hamcrest-core")
@@ -55,8 +56,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // 레디스
-    implementation("org.springframework.boot:spring-boot-starter-data-redis:2.4.2")
-    implementation("org.springframework.session:spring-session-data-redis:2.4.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:2.7.3")
+    implementation("org.springframework.session:spring-session-data-redis:2.7.0")
+
+    // AWS S3
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.307")
 }
 
 tasks.withType<KotlinCompile> {

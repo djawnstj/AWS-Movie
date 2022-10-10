@@ -14,7 +14,7 @@ import javax.persistence.*
 @Entity
 data class Genre protected constructor(
     @Enumerated(value = EnumType.STRING)
-    val genre: GenreEnum,
+    val genre: GenreCode,
     @ManyToMany @JoinColumn(name = "movie_id")
     val movies: List<Movie> = ArrayList()
 ): BaseEntity() {
@@ -26,7 +26,7 @@ data class Genre protected constructor(
     companion object {
 
         //============= 생성 메서드 =============//
-        fun createGenre(genreCode: GenreEnum) = Genre(genreCode)
+        fun createGenre(genreCode: GenreCode) = Genre(genreCode)
 
     }
 

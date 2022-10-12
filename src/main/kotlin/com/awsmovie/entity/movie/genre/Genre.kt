@@ -15,8 +15,10 @@ import javax.persistence.*
 data class Genre protected constructor(
     @Enumerated(value = EnumType.STRING)
     val genre: GenreCode,
-    @ManyToMany @JoinColumn(name = "movie_id")
-    val movies: List<Movie> = ArrayList()
+    @OneToMany(mappedBy = "movieGenreGenre", cascade = [CascadeType.REMOVE])
+    val movies: List<MovieGenre> = ArrayList(),
+//    @ManyToMany @JoinColumn(name = "movie_id")
+//    val movies: List<Movie> = ArrayList()
 ): BaseEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

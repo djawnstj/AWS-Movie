@@ -1,6 +1,7 @@
 package com.awsmovie.entity.movie
 
 import com.awsmovie.entity.BaseEntity
+import com.fasterxml.jackson.annotation.JsonBackReference
 import org.hibernate.Hibernate
 import javax.persistence.*
 import javax.persistence.FetchType.LAZY as LAZY
@@ -15,6 +16,7 @@ data class MovieImage protected constructor(
     val movieImageId: Long? = null
 
     @OneToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
+    @JsonBackReference
     lateinit var movie: Movie
         protected set
 

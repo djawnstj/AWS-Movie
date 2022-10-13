@@ -6,6 +6,7 @@ import javax.persistence.*
 
 @Entity
 data class User protected constructor(
+    @Column(unique=true)
     val userId: String,
     val userPw: String,
     val userName: String,

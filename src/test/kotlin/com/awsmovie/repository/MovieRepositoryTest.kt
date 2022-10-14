@@ -1,7 +1,7 @@
 package com.awsmovie.repository
 
-import com.awsmovie.entity.genre.Genre
-import com.awsmovie.entity.genre.GenreEnum
+import com.awsmovie.entity.movie.genre.Genre
+import com.awsmovie.entity.movie.genre.GenreCode
 import com.awsmovie.entity.movie.Movie
 import com.awsmovie.entity.movie.MovieImage
 import com.awsmovie.repository.movie.MovieRepository
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -72,22 +73,40 @@ class MovieRepositoryTest @Autowired constructor(
         assertEquals(movie1.movieId, foundMovies[0].movieId)
     }
 
+    @Test
+    fun 영화_ID로_조회() {
+        // given
+        val movie1 = createMovie("영화1")
+        val movie2 = createMovie("영화2")
+        val movie3 = createMovie("영화3")
+
+        movieRepository.save(movie1)
+        movieRepository.save(movie2)
+        movieRepository.save(movie3)
+
+        // when
+        val foundMovies = movieRepository.findByIdOrNull(movie1.movieId ?: -1)
+
+        // then
+        assertEquals(movie1.movieId, foundMovies?.movieId)
+    }
+
     private fun createMovie(): Movie {
-        val genre = Genre.createGenre(GenreEnum.ROMANCE)
+        val genre = Genre.createGenre(GenreCode.ROMANCE)
         val movieImage = MovieImage.createMovieImage("test")
-        return Movie.createMovie("영화 1", 160, LocalDateTime.now(), "summary", listOf(genre), movieImage)
+        return Movie.createMovie("영화 1", 160, LocalDateTime.now(), "summary", movieImage)
     }
 
     private fun createMovie(openingDate: LocalDateTime): Movie {
-        val genre = Genre.createGenre(GenreEnum.ROMANCE)
+        val genre = Genre.createGenre(GenreCode.ROMANCE)
         val movieImage = MovieImage.createMovieImage("test")
-        return Movie.createMovie("영화 1", 160, openingDate, "summary", listOf(genre), movieImage)
+        return Movie.createMovie("영화 1", 160, openingDate, "summary", movieImage)
     }
 
     private fun createMovie(name: String): Movie {
-        val genre = Genre.createGenre(GenreEnum.ROMANCE)
+        val genre = Genre.createGenre(GenreCode.ROMANCE)
         val movieImage = MovieImage.createMovieImage("test")
-        return Movie.createMovie(name, 160, LocalDateTime.now(), "summary", listOf(genre), movieImage)
+        return Movie.createMovie(name, 160, LocalDateTime.now(), "summary", movieImage)
     }
 
 }

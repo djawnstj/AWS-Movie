@@ -3,9 +3,13 @@ package com.awsmovie.service.user
 import com.awsmovie.entity.user.User
 import com.awsmovie.exception.UserValidationException
 import com.awsmovie.repository.user.UserRepository
+import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 class UserService(
     private val userRepository: UserRepository,
 ) {
@@ -13,6 +17,7 @@ class UserService(
     /**
      * 회원 가입
      */
+    @Transactional
     fun join(userName: String, userId: String, userPw: String): User {
         check(userName.isNotEmpty() && userId.isNotEmpty() && userPw.isNotEmpty()) { throw IllegalStateException("파라미터가 올바르지 않습니다.") }
         val user = User.createUser(userId, userPw, userName)

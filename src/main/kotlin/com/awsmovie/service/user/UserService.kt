@@ -1,7 +1,8 @@
 package com.awsmovie.service.user
 
+import com.awsmovie.controller.handler.ErrorCode
 import com.awsmovie.entity.user.User
-import com.awsmovie.exception.UserValidationException
+import com.awsmovie.exception.duplication.DuplicationUserException
 import com.awsmovie.repository.user.UserRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -29,7 +30,7 @@ class UserService(
      * 아이디 중복 체크
      */
     fun validateDuplicateUser(userId: String) {
-        check(userRepository.findByUserId(userId) == null) { throw UserValidationException("이미 존재하는 회원입니다.") }
+        check(userRepository.findByUserId(userId) == null) { throw DuplicationUserException(ErrorCode.DUPLICATE_USER_ID) }
     }
 
     /**

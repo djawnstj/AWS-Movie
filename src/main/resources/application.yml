@@ -72,6 +72,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         dialect.storage_engine: innodb
 
+  was:
+    protocol: "http"
+    host: "127.0.0.1"
+    port: "8081"
 
 ---
 spring:
@@ -93,3 +97,8 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         dialect.storage_engine: innodb
+
+  was:
+    protocol: "http"
+    host: "127.0.0.1"
+    port: "8081"

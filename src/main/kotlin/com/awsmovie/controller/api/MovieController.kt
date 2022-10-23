@@ -1,4 +1,4 @@
-package com.awsmovie.controller
+package com.awsmovie.controller.api
 
 import com.awsmovie.controller.dto.movie.MovieDto
 import com.awsmovie.controller.dto.movie.MovieRateDto

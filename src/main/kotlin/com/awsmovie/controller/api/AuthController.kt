@@ -1,4 +1,4 @@
-package com.awsmovie.controller
+package com.awsmovie.controller.api
 
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j

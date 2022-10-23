@@ -1,4 +1,4 @@
-package com.awsmovie.controller
+package com.awsmovie.controller.api
 
 import com.awsmovie.controller.response.BaseResponse
 import com.awsmovie.controller.response.ListResponse

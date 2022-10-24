@@ -17,14 +17,14 @@ class GenreController {
     @GetMapping("/genres")
     @ApiOperation(value = "장르 목록 조회", notes = "전체 장르를 조회합니다.")
     fun genres(): ResponseEntity<BaseResponse> {
-        val result = GenreCode.values()
+        val genres = GenreCode.toList()
 
         val res = ListResponse(
             HttpStatus.OK.value(),
             HttpStatus.OK,
             "장르 조회 성공",
-            result.size,
-            result.toList()
+            genres.size,
+            genres
         )
 
         return ResponseEntity(res, res.status)

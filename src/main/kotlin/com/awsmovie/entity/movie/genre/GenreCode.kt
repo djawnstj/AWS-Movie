@@ -1,5 +1,7 @@
 package com.awsmovie.entity.movie.genre
 
+import com.awsmovie.controller.dto.movie.GenreDto
+
 enum class GenreCode(
     val genreCode: Int,
     val genreKrName: String,
@@ -19,6 +21,20 @@ enum class GenreCode(
 
             throw IllegalArgumentException("일치하는 장르 코드가 없습니다.")
 
+        }
+
+        /**
+         * 장르 배열로 변환
+         */
+        fun toList(): List<GenreDto> {
+
+            val genreList = mutableListOf<GenreDto>()
+
+            values().forEach {
+                genreList += GenreDto(it.genreCode, it.genreKrName, it.genreEnName)
+            }
+
+            return genreList
         }
 
     }

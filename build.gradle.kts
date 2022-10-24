@@ -61,6 +61,11 @@ dependencies {
 
     // AWS S3
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.307")
+
+    // 스웨거
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+
 }
 
 tasks.withType<KotlinCompile> {

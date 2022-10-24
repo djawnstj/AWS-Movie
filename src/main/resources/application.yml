@@ -9,6 +9,10 @@ spring:
   profiles:
     active: dev
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   # Redis
   redis:
     host: 127.0.0.1
@@ -56,7 +60,7 @@ spring:
       on-profile: dev
 
   datasource:
-#    url: jdbc:h2:tcp://localhost/~/projects/spring/AWS-Movie/db/aws_movie # 윈도우
+#    url: jdbc:h2:tcp://localhost/~/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 윈도우
     url: jdbc:h2:tcp://localhost/~/Documents/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 맥
 #    url: jdbc:h2:~/Documents/projects/spring/AWS-Movie/db/aws_movie;MODE=MYSQL # 맥
     username: sa

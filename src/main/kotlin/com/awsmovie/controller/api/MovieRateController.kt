@@ -26,7 +26,7 @@ class MovieRateController(
         @RequestParam movieId: Long,
         @RequestParam rate: Int,
         @RequestParam comment: String
-    ): ResponseEntity<BaseResponse> {
+    ): BaseResponse {
 
         val movieRate = movieRateService.saveRate(uid, movieId, rate, comment)
 
@@ -36,7 +36,7 @@ class MovieRateController(
 
             val movieRateDto = MovieRateDto(userDto, rate, comment)
 
-            val res = ListResponse(
+            return ListResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK,
                 "영화 평점 저장 성공",
@@ -44,25 +44,21 @@ class MovieRateController(
                 listOf(movieRateDto)
             )
 
-            return ResponseEntity(res, res.status)
-
         }
     }
 
     @GetMapping("/movie-rates")
-    fun findRateList(@PageableDefault(size=10, sort=["createTime"], direction = Sort.Direction.DESC) pageable: Pageable): ResponseEntity<BaseResponse> {
+    fun findRateList(@PageableDefault(size=10, sort=["createTime"], direction = Sort.Direction.DESC) pageable: Pageable): BaseResponse {
 
         val rateList = movieRateService.findAllWithPaging(pageable)
 
-        val res = ListResponse(
+        return ListResponse(
             HttpStatus.OK.value(),
             HttpStatus.OK,
             "평점 리스트 조회 성공",
             rateList.size,
             rateList.toList()
         )
-
-        return ResponseEntity(res, res.status)
 
     }
 

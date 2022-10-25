@@ -34,8 +34,6 @@ class MovieController(
     private val movieImageService: MovieImageService,
     private val genreService: GenreService,
     private val movieRateService: MovieRateService,
-    private val movieGenreRepository: MovieGenreRepository,
-    private val movieRepository: MovieRepository,
 ) {
 
     /**
@@ -50,7 +48,7 @@ class MovieController(
 //        @RequestParam summary: String,
         @RequestParam("image") multipartFile: MultipartFile,
         @RequestParam vararg genreCode: GenreCode
-    ): ResponseEntity<BaseResponse> {
+    ): BaseResponse {
 
 //        println("-=========================")
 //        println("$movieName, $runTime, $openingDate, $summary,")
@@ -63,24 +61,20 @@ class MovieController(
 
             movieService.saveMovie(movieName, runTime, openingDate, summary, genreCode.toList(), imageUrl)
 
-            val res = BaseResponse(
+            return BaseResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK,
                 "영화 정보 저장 성공"
             )
 
-            return ResponseEntity(res, res.status)
-
         }
 //
-//        val res = BaseResponse(
+//         return BaseResponse(
 //            HttpStatus.OK.value(),
 //            HttpStatus.OK,
 //            "영화 정보 저장 성공"
 //        )
 //
-//        return ResponseEntity(res, res.status)
-
     }
 
     /**
@@ -90,7 +84,7 @@ class MovieController(
      * sort : Sorting 에 대한 값 설정하는 파라미터로, 기본적으로 오름차순이다. 표기는 정렬한 필드명,정렬기준 ex) createdDate,desc
      */
     @GetMapping("/movies")
-    fun findMovies(@PageableDefault(size=10, sort=["openingDate"], direction = Sort.Direction.DESC) pageable: Pageable): ResponseEntity<BaseResponse> {
+    fun findMovies(@PageableDefault(size=10, sort=["openingDate"], direction = Sort.Direction.DESC) pageable: Pageable): BaseResponse {
 
         val movies = movieService.getMovieListByRating(pageable)
 
@@ -118,7 +112,7 @@ class MovieController(
             result += MovieDto(movie.movieName, movie.runTime, movie.openingDate, movie.summary, genres, movie.movieImage.imagePath, rates)
         }
 
-        val res = ListResponse(
+        return ListResponse(
             HttpStatus.OK.value(),
             HttpStatus.OK,
             "영화 목록 조회 성공",
@@ -126,14 +120,13 @@ class MovieController(
             result
         )
 
-        return ResponseEntity(res, res.status)
     }
 
     /**
      * 영화 상세정보 조회
      */
     @GetMapping("/movies/{id}")
-    fun movieInfo(@PathVariable("id") movieId: Long): ResponseEntity<BaseResponse> {
+    fun movieInfo(@PathVariable("id") movieId: Long): BaseResponse {
 
         val result = mutableListOf<MovieDto>()
 
@@ -160,7 +153,7 @@ class MovieController(
 
         }
 
-        val res = ListResponse(
+        return ListResponse(
             HttpStatus.OK.value(),
             HttpStatus.OK,
             "영화 상세 정체 조회 성공",
@@ -168,34 +161,6 @@ class MovieController(
             result
         )
 
-        return ResponseEntity(res, res.status)
-
-    }
-
-    @PostMapping("/movies/save")
-    fun test12() {
-        val genre = Genre.createGenre(GenreCode.ROMANCE)
-        genreService.saveGenre(genre)
-
-        for (i in 0..10) {
-            val movie = createMovie("test $i")
-            movieRepository.save(movie)
-
-            movieGenreRepository.save(MovieGenre.create(genre, movie))
-        }
-
-    }
-
-    @GetMapping("/test")
-    fun test(@RequestParam vararg genreCode: GenreCode): String {
-        var test = ""
-        genreCode.forEach { test += it.genreKrName }
-        return test
-    }
-
-    private fun createMovie(name: String): Movie {
-        val movieImage = MovieImage.createMovieImage("test")
-        return Movie.createMovie(name, 160, LocalDateTime.now(), "summary", movieImage)
     }
 
 }

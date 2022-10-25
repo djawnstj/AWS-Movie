@@ -23,31 +23,17 @@ class UserController(
      * 회원가입
      */
     @PostMapping("/users")
-    fun create(@RequestBody userDto: UserDto): ResponseEntity<BaseResponse> {
+    fun create(@RequestBody userDto: UserDto): BaseResponse {
 
         userDto.apply {
 
-            val savedUser = userService.join(userName, userId, userPw)
+            userService.join(userName, userId, userPw)
 
-            val res = if (savedUser.userId == userDto.userId) {
-                ListResponse(
-                    code = HttpStatus.CREATED.value(),
-                    status = HttpStatus.CREATED,
-                    message = "유저 정보 저장 성공",
-                    count = 1,
-                    result = listOf(savedUser),
-                )
-            } else {
-                ListResponse(
-                    code = HttpStatus.BAD_REQUEST.value(),
-                    status = HttpStatus.BAD_REQUEST,
-                    message = "유저 정보 저장 실패",
-                    count = 0,
-                    result = listOf(),
-                )
-            }
-
-            return ResponseEntity(res, res.status)
+            return BaseResponse(
+                HttpStatus.CREATED.value(),
+                HttpStatus.CREATED,
+                "유저 정보 저장 성공",
+            )
 
         }
 
@@ -57,7 +43,7 @@ class UserController(
      * 로그인
      */
     @GetMapping("/users")
-    fun findUser(userId: String, userPw: String, session: HttpSession): ResponseEntity<BaseResponse> {
+    fun findUser(userId: String, userPw: String, session: HttpSession): BaseResponse {
 
         userService.findUserByUserIdAndUserPw(userId, userPw).let {
 
@@ -73,7 +59,7 @@ class UserController(
 
             it?.apply { session.setAttribute("session", uid) }
 
-            return ResponseEntity(res, res.status)
+            return res
 
         }
 

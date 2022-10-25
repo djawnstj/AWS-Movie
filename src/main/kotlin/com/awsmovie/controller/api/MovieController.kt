@@ -43,10 +43,19 @@ class MovieController(
      */
     @PostMapping("/movies")
     fun create(
-        @RequestBody movieDto: MovieDto,
-        @RequestParam("image") multipartFile: MultipartFile,
+        @RequestBody   movieDto: MovieDto,
+        @RequestParam movieName: String,
+        @RequestParam runTime: String,
+        @RequestParam openingDate: String,
+        @RequestParam summary: String,
+//        @RequestParam("image") multipartFile: MultipartFile,
         @RequestParam vararg genreCode: GenreCode
     ): ResponseEntity<BaseResponse> {
+
+//        println("-=========================")
+//        println("$movieName, $runTime, $openingDate, $summary,")
+////        println("$movieName, $runTime, $openingDate, $summary, $genreCode")
+//        println("-=========================")
 
         val imageUrl = movieImageService.uploadToS3(multipartFile)
 
@@ -63,6 +72,14 @@ class MovieController(
             return ResponseEntity(res, res.status)
 
         }
+//
+//        val res = BaseResponse(
+//            HttpStatus.OK.value(),
+//            HttpStatus.OK,
+//            "영화 정보 저장 성공"
+//        )
+//
+//        return ResponseEntity(res, res.status)
 
     }
 

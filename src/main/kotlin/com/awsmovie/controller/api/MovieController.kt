@@ -44,11 +44,11 @@ class MovieController(
     @PostMapping("/movies")
     fun create(
         @RequestBody   movieDto: MovieDto,
-        @RequestParam movieName: String,
-        @RequestParam runTime: String,
-        @RequestParam openingDate: String,
-        @RequestParam summary: String,
-//        @RequestParam("image") multipartFile: MultipartFile,
+//        @RequestParam movieName: String,
+//        @RequestParam runTime: String,
+//        @RequestParam openingDate: String,
+//        @RequestParam summary: String,
+        @RequestParam("image") multipartFile: MultipartFile,
         @RequestParam vararg genreCode: GenreCode
     ): ResponseEntity<BaseResponse> {
 

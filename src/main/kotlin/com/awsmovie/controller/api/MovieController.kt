@@ -5,13 +5,7 @@ import com.awsmovie.controller.dto.movie.MovieRateDto
 import com.awsmovie.controller.dto.user.UserDto
 import com.awsmovie.controller.response.BaseResponse
 import com.awsmovie.controller.response.ListResponse
-import com.awsmovie.entity.movie.genre.Genre
 import com.awsmovie.entity.movie.genre.GenreCode
-import com.awsmovie.entity.movie.Movie
-import com.awsmovie.entity.movie.MovieImage
-import com.awsmovie.entity.movie.genre.MovieGenre
-import com.awsmovie.repository.movie.MovieRepository
-import com.awsmovie.repository.movieGenre.MovieGenreRepository
 import com.awsmovie.service.genre.GenreService
 import com.awsmovie.service.movie.MovieImageService
 import com.awsmovie.service.movie.MovieRateService
@@ -21,10 +15,9 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.time.LocalDateTime
 
 @RestController
 @RequiredArgsConstructor
@@ -36,24 +29,25 @@ class MovieController(
     private val movieRateService: MovieRateService,
 ) {
 
+
+    @RequestMapping(value =["/movies/test"], method = [RequestMethod.POST],
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE])
+    fun test(@RequestPart(value = "genres") vararg genres: GenreCode): BaseResponse {
+        genres.forEach { println(it) }
+
+        return BaseResponse(HttpStatus.OK.value(), HttpStatus.OK, "ok")
+    }
+
     /**
      * 영화 저장
      */
-    @PostMapping("/movies")
+    @RequestMapping(value =["/movies"], method = [RequestMethod.POST],
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE])
     fun create(
-        @RequestBody   movieDto: MovieDto,
-//        @RequestParam movieName: String,
-//        @RequestParam runTime: String,
-//        @RequestParam openingDate: String,
-//        @RequestParam summary: String,
-        @RequestParam("image") multipartFile: MultipartFile,
+        @RequestPart(value = "movieDto") movieDto: MovieDto,
+        @RequestPart(value = "image") multipartFile: MultipartFile,
         @RequestParam vararg genreCode: GenreCode
     ): BaseResponse {
-
-//        println("-=========================")
-//        println("$movieName, $runTime, $openingDate, $summary,")
-////        println("$movieName, $runTime, $openingDate, $summary, $genreCode")
-//        println("-=========================")
 
         val imageUrl = movieImageService.uploadToS3(multipartFile)
 
@@ -68,13 +62,7 @@ class MovieController(
             )
 
         }
-//
-//         return BaseResponse(
-//            HttpStatus.OK.value(),
-//            HttpStatus.OK,
-//            "영화 정보 저장 성공"
-//        )
-//
+
     }
 
     /**
@@ -109,7 +97,14 @@ class MovieController(
                 )
             }
 
-            result += MovieDto(movie.movieName, movie.runTime, movie.openingDate, movie.summary, genres, movie.movieImage.imagePath, rates)
+            result += MovieDto(
+                movieName= movie.movieName,
+                runTime = movie.runTime,
+                openingDate = movie.openingDate,
+                summary = movie.summary,
+                genres = genres,
+                movieImagePath = movie.movieImage.imagePath,
+                rates = rates)
         }
 
         return ListResponse(
@@ -140,13 +135,13 @@ class MovieController(
             val rateList = mutableListOf<MovieRateDto>()
 
             val movieDto = MovieDto(
-                movieName,
-                runTime,
-                openingDate,
-                summary,
-                genreList,
-                movieImage.imagePath,
-                rateList,
+                movieName = movieName,
+                runTime = runTime,
+                openingDate = openingDate,
+                summary = summary,
+                genres = genreList,
+                movieImagePath = movieImage.imagePath,
+                rates = rateList,
             )
 
             result += movieDto

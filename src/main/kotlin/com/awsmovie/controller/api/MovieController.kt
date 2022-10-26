@@ -1,5 +1,6 @@
 package com.awsmovie.controller.api
 
+import com.awsmovie.controller.dto.movie.GenreDto
 import com.awsmovie.controller.dto.movie.MovieDto
 import com.awsmovie.controller.dto.movie.MovieRateDto
 import com.awsmovie.controller.dto.user.UserDto
@@ -80,13 +81,13 @@ class MovieController(
 
         movies.forEach { movie ->
 
-            println("genre : ${movie.genres.size}")
-
-            val genres = mutableListOf<GenreCode>()
+            val genres = mutableListOf<GenreDto>()
             val rates = mutableListOf<MovieRateDto>()
 
             movie.genres.forEach {
-                genres += it.movieGenreGenre.genre
+                it.movieGenreGenre.genre.apply {
+                    genres += GenreDto(genreCode, genreKrName, genreEnName)
+                }
             }
 
             movie.rates.forEach {
@@ -129,8 +130,12 @@ class MovieController(
 
         movie?.apply {
 
-            val genreList = mutableListOf<GenreCode>()
-            genres.forEach { genreList += it.movieGenreGenre.genre }
+            val genreList = mutableListOf<GenreDto>()
+            genres.forEach {
+                it.movieGenreGenre.genre.apply {
+                    genreList += GenreDto(genreCode, genreKrName, genreEnName)
+                }
+            }
 
             val rateList = mutableListOf<MovieRateDto>()
 

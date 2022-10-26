@@ -8,7 +8,7 @@ data class MovieDto(
     val runTime: Int,
     val openingDate: LocalDateTime,
     val summary: String,
-    val genres: List<GenreCode> = ArrayList(),
+    val genres: List<GenreDto> = ArrayList(),
     val movieImagePath: String?,
     val rates: List<MovieRateDto> = ArrayList(),
 )

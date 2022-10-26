@@ -99,6 +99,7 @@ class MovieController(
             }
 
             result += MovieDto(
+                movieId = movie.movieId ?: -1,
                 movieName= movie.movieName,
                 runTime = movie.runTime,
                 openingDate = movie.openingDate,
@@ -140,6 +141,7 @@ class MovieController(
             val rateList = mutableListOf<MovieRateDto>()
 
             val movieDto = MovieDto(
+                movieId = movieId,
                 movieName = movieName,
                 runTime = runTime,
                 openingDate = openingDate,

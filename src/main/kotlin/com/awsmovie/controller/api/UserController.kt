@@ -7,7 +7,7 @@ import com.awsmovie.service.movie.MovieImageService
 import com.awsmovie.service.user.UserService
 import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpSession
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/aws-movie-api/v1")
+@EnableRedisHttpSession
 class UserController(
     private val movieImageService: MovieImageService,
     private val userService: UserService
@@ -57,7 +58,7 @@ class UserController(
                 result = result
             )
 
-            it?.apply { session.setAttribute("session", uid) }
+            it?.apply { session.setAttribute("uid", uid) }
 
             return res
 

@@ -26,8 +26,6 @@ import org.springframework.web.multipart.MultipartFile
 class MovieController(
     private val movieService: MovieService,
     private val movieImageService: MovieImageService,
-    private val genreService: GenreService,
-    private val movieRateService: MovieRateService,
 ) {
 
 
@@ -93,6 +91,7 @@ class MovieController(
             movie.rates.forEach {
                 rates += MovieRateDto(
                     UserDto(it.user.userName, it.user.userId, it.user.userPw),
+                    movie.movieId ?: -1,
                     it.rate,
                     it.comment
                 )

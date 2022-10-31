@@ -90,7 +90,7 @@ class MovieController(
 
             movie.rates.forEach {
                 rates += MovieRateDto(
-                    UserDto(it.user.userName, it.user.userId, it.user.userPw),
+                    UserDto(it.user.uid, it.user.userName, it.user.userId, it.user.userPw),
                     movie.movieId ?: -1,
                     it.rate,
                     it.comment

@@ -14,7 +14,7 @@ data class MovieRate protected constructor(
     @ManyToOne(fetch = LAZY) @JoinColumn(name = "movie_id")
     @JsonBackReference
     val movie: Movie,
-    val rate: Int,
+    val rate: Double,
     val comment: String,
 ) : BaseEntity() {
 
@@ -25,7 +25,7 @@ data class MovieRate protected constructor(
     companion object {
 
         //============= 생성 메서드 =============//
-        fun create(user: User, movie: Movie, rate: Int, comment: String): MovieRate =
+        fun create(user: User, movie: Movie, rate: Double, comment: String): MovieRate =
             MovieRate(user, movie, rate, comment)
 
     }

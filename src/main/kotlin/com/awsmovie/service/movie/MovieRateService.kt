@@ -1,7 +1,10 @@
 package com.awsmovie.service.movie
 
+import com.awsmovie.controller.handler.ErrorCode
 import com.awsmovie.entity.movie.Movie
 import com.awsmovie.entity.movie.MovieRate
+import com.awsmovie.exception.nonExistent.NonExistentMovieException
+import com.awsmovie.exception.nonExistent.NonExistentUserException
 import com.awsmovie.repository.MovieRateRepository
 import com.awsmovie.repository.movie.MovieRepository
 import com.awsmovie.repository.user.UserRepository
@@ -25,15 +28,15 @@ class MovieRateService(
      * 영화 평점 저장
      */
     @Transactional
-    fun saveRate(uid: Long, movieId: Long, rate: Int, comment: String): MovieRate {
+    fun saveRate(uid: Long, movieId: Long, rate: Double, comment: String): MovieRate {
 
-        check(rate in 1..5) { throw IllegalArgumentException("평점이 0점 미만이거나 5점을 초과하였습니다.") }
+        check(rate in 1.0..5.0) { throw IllegalArgumentException("평점이 0점 미만이거나 5점을 초과하였습니다.") }
 
         val user = userRepository.findByIdOrNull(uid)
         val movie = movieRepository.findByIdOrNull(movieId)
 
-        check (user != null) { throw IllegalArgumentException("입력한 유저 정보가 없습니다.") }
-        check(movie != null) { throw IllegalArgumentException("입력한 영화 정보가 없습니다.") }
+        check (user != null) { throw NonExistentUserException(ErrorCode.USER_NOT_FOUND) }
+        check(movie != null) { throw NonExistentMovieException(ErrorCode.MOVIE_NOT_FOUND) }
 
         val rate = MovieRate.create(user, movie, rate, comment)
 

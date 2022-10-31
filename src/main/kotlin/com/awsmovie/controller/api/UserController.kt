@@ -50,17 +50,13 @@ class UserController(
 
             val result = if (it != null) listOf(it) else listOf()
 
-            val res = ListResponse(
+            return ListResponse(
                 code = HttpStatus.OK.value(),
                 status = HttpStatus.OK,
                 message = "유저 정보 조회 성공",
                 count = result.size,
                 result = result
             )
-
-            it?.apply { session.setAttribute("uid", uid) }
-
-            return res
 
         }
 

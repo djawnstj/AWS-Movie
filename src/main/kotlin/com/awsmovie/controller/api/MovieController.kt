@@ -90,6 +90,7 @@ class MovieController(
 
             movie.rates.forEach {
                 rates += MovieRateDto(
+                    it.movieRateId ?: -1,
                     UserDto(it.user.uid, it.user.userName, it.user.userId, it.user.userPw),
                     movie.movieId ?: -1,
                     it.rate,
@@ -138,6 +139,16 @@ class MovieController(
             }
 
             val rateList = mutableListOf<MovieRateDto>()
+
+            rates.forEach {
+                rateList += MovieRateDto(
+                    it.movieRateId ?: -1,
+                    UserDto(it.user.uid, it.user.userName, it.user.userId, it.user.userPw),
+                    movieId,
+                    it.rate,
+                    it.comment
+                )
+            }
 
             val movieDto = MovieDto(
                 movieId = movieId,

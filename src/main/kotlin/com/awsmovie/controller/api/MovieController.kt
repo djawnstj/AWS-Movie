@@ -1,15 +1,9 @@
 package com.awsmovie.controller.api
 
-import com.awsmovie.controller.dto.movie.GenreDto
 import com.awsmovie.controller.dto.movie.MovieDto
-import com.awsmovie.controller.dto.movie.MovieRateDto
-import com.awsmovie.controller.dto.user.UserDto
 import com.awsmovie.controller.response.BaseResponse
 import com.awsmovie.controller.response.ListResponse
 import com.awsmovie.entity.movie.genre.GenreCode
-import com.awsmovie.service.genre.GenreService
-import com.awsmovie.service.movie.MovieImageService
-import com.awsmovie.service.movie.MovieRateService
 import com.awsmovie.service.movie.MovieService
 import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Pageable
@@ -25,17 +19,7 @@ import org.springframework.web.multipart.MultipartFile
 @RequestMapping("/aws-movie-api/v1")
 class MovieController(
     private val movieService: MovieService,
-    private val movieImageService: MovieImageService,
 ) {
-
-
-    @RequestMapping(value =["/movies/test"], method = [RequestMethod.POST],
-        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun test(@RequestPart(value = "genres") vararg genres: GenreCode): BaseResponse {
-        genres.forEach { println(it) }
-
-        return BaseResponse(HttpStatus.OK.value(), HttpStatus.OK, "ok")
-    }
 
     /**
      * 영화 저장
@@ -48,11 +32,9 @@ class MovieController(
         @RequestParam vararg genreCode: GenreCode
     ): BaseResponse {
 
-        val imageUrl = movieImageService.uploadToS3(multipartFile)
-
         movieDto.apply {
 
-            movieService.saveMovie(movieName, runTime, openingDate, summary, genreCode.toList(), imageUrl)
+            movieService.saveMovie(movieName, runTime, openingDate, summary, genreCode.toList(), multipartFile)
 
             return BaseResponse(
                 HttpStatus.OK.value(),
@@ -73,41 +55,7 @@ class MovieController(
     @GetMapping("/movies")
     fun findMovies(@PageableDefault(size=10, sort=["openingDate"], direction = Sort.Direction.DESC) pageable: Pageable): BaseResponse {
 
-        val movies = movieService.getMovieListByRating(pageable)
-
-        val result = mutableListOf<MovieDto>()
-
-        movies.forEach { movie ->
-
-            val genres = mutableListOf<GenreDto>()
-            val rates = mutableListOf<MovieRateDto>()
-
-            movie.genres.forEach {
-                it.movieGenreGenre.genre.apply {
-                    genres += GenreDto(genreCode, genreKrName, genreEnName)
-                }
-            }
-
-            movie.rates.forEach {
-                rates += MovieRateDto(
-                    it.movieRateId ?: -1,
-                    UserDto(it.user.uid, it.user.userName, it.user.userId, it.user.userPw),
-                    movie.movieId ?: -1,
-                    it.rate,
-                    it.comment
-                )
-            }
-
-            result += MovieDto(
-                movieId = movie.movieId ?: -1,
-                movieName= movie.movieName,
-                runTime = movie.runTime,
-                openingDate = movie.openingDate,
-                summary = movie.summary,
-                genres = genres,
-                movieImagePath = movie.movieImage.imagePath,
-                rates = rates)
-        }
+        val result = movieService.getMovieListByRating(pageable)
 
         return ListResponse(
             HttpStatus.OK.value(),
@@ -125,45 +73,10 @@ class MovieController(
     @GetMapping("/movies/{id}")
     fun movieInfo(@PathVariable("id") movieId: Long): BaseResponse {
 
-        val result = mutableListOf<MovieDto>()
-
         val movie = movieService.findMovieInfo(movieId)
 
-        movie?.apply {
-
-            val genreList = mutableListOf<GenreDto>()
-            genres.forEach {
-                it.movieGenreGenre.genre.apply {
-                    genreList += GenreDto(genreCode, genreKrName, genreEnName)
-                }
-            }
-
-            val rateList = mutableListOf<MovieRateDto>()
-
-            rates.forEach {
-                rateList += MovieRateDto(
-                    it.movieRateId ?: -1,
-                    UserDto(it.user.uid, it.user.userName, it.user.userId, it.user.userPw),
-                    movieId,
-                    it.rate,
-                    it.comment
-                )
-            }
-
-            val movieDto = MovieDto(
-                movieId = movieId,
-                movieName = movieName,
-                runTime = runTime,
-                openingDate = openingDate,
-                summary = summary,
-                genres = genreList,
-                movieImagePath = movieImage.imagePath,
-                rates = rateList,
-            )
-
-            result += movieDto
-
-        }
+        val result = mutableListOf<MovieDto>()
+        result += movie
 
         return ListResponse(
             HttpStatus.OK.value(),

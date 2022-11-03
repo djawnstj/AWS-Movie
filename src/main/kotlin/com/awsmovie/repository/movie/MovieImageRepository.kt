@@ -1,19 +1,18 @@
-package com.awsmovie.service.movie
+package com.awsmovie.repository.movie
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.awsmovie.util.DateUtil
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
+import org.springframework.stereotype.Repository
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
 import java.time.LocalDateTime
 
-@Service
+@Repository
 @RequiredArgsConstructor
-class MovieImageService(
+class MovieImageRepository(
     private val amazonS3: AmazonS3,
 ) {
 

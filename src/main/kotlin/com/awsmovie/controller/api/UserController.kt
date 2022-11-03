@@ -3,13 +3,11 @@ package com.awsmovie.controller.api
 import com.awsmovie.controller.dto.user.UserDto
 import com.awsmovie.controller.response.BaseResponse
 import com.awsmovie.controller.response.ListResponse
-import com.awsmovie.service.movie.MovieImageService
 import com.awsmovie.service.user.UserService
 import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpSession
 
 @RestController
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpSession
 @RequestMapping("/aws-movie-api/v1")
 @EnableRedisHttpSession
 class UserController(
-    private val movieImageService: MovieImageService,
     private val userService: UserService
 ) {
     /**
@@ -61,8 +58,5 @@ class UserController(
         }
 
     }
-
-    @PostMapping("/upload")
-    fun uploadFile(@RequestParam("images") multipartFile: MultipartFile): String = movieImageService.uploadToS3(multipartFile)
 
 }
